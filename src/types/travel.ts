@@ -9,6 +9,11 @@ export interface TimelineItem {
   koreanTitle?: string;
   category: 'flight' | 'lodging' | 'sightseeing' | 'shopping' | 'food' | 'concert' | 'logistics';
   location: string;
+  address?: string;
+  phone?: string;
+  openingHours?: string;
+  googleMapsQuery?: string;
+  naverMapQuery?: string;
   description: string;
   photoTip?: string;
   shoppingOrTaxTip?: string;
@@ -40,13 +45,26 @@ export interface LootItem {
   notes?: string;
 }
 
-export interface ChecklistItem {
+// 1. 行前準備與打包清單 (Pre-trip Packing)
+export interface PackingItem {
   id: string;
-  category: 'carryon' | 'checked' | 'pilgrimage' | 'shopping_target' | 'documents';
+  category: 'documents' | 'carryon_bag' | 'checked_luggage' | 'clothing_weather';
   title: string;
   subtitle?: string;
   completed: boolean;
   mustCheck?: boolean;
+}
+
+// 2. 旅途中朝聖與心願清單 (In-trip Pilgrimage & Wishlist)
+export interface WishlistItem {
+  id: string;
+  category: 'pilgrimage_idol' | 'photo_scenery' | 'shopping_target' | 'food_wishlist';
+  title: string;
+  subtitle?: string;
+  location?: string;
+  completed: boolean;
+  mustVisit?: boolean;
+  notes?: string;
 }
 
 export interface CardPromotion {

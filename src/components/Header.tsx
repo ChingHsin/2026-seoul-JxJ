@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Calendar, Scale, Coins, CheckSquare, Rocket, Download, Smartphone } from 'lucide-react';
+import { Calendar, Package, Camera, Scale, Coins, Smartphone } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
+export type MainTabType = 'itinerary' | 'packing' | 'wishlist' | 'luggage' | 'currency';
+
 interface HeaderProps {
-  activeTab: 'itinerary' | 'luggage' | 'currency' | 'checklist' | 'deploy';
-  setActiveTab: (tab: 'itinerary' | 'luggage' | 'currency' | 'checklist' | 'deploy') => void;
-  onOpenDeployModal: () => void;
+  activeTab: MainTabType;
+  setActiveTab: (tab: MainTabType) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenDeployModal }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
   const [showIOSModal, setShowIOSModal] = useState(false);
 
@@ -49,6 +50,30 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenD
             </button>
 
             <button
+              onClick={() => setActiveTab('packing')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
+                activeTab === 'packing'
+                  ? 'bg-[#231F1E] text-white'
+                  : 'text-[#6E655F] hover:text-[#231F1E] hover:bg-[#F0EAE1]'
+              }`}
+            >
+              <Package className="w-4 h-4" />
+              <span>行前打包</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('wishlist')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
+                activeTab === 'wishlist'
+                  ? 'bg-[#231F1E] text-white'
+                  : 'text-[#6E655F] hover:text-[#231F1E] hover:bg-[#F0EAE1]'
+              }`}
+            >
+              <Camera className="w-4 h-4" />
+              <span>朝聖心願</span>
+            </button>
+
+            <button
               onClick={() => setActiveTab('luggage')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
                 activeTab === 'luggage'
@@ -57,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenD
               }`}
             >
               <Scale className="w-4 h-4" />
-              <span>15kg配重與戰利品</span>
+              <span>15kg配重記帳</span>
             </button>
 
             <button
@@ -69,35 +94,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenD
               }`}
             >
               <Coins className="w-4 h-4" />
-              <span>雙向匯率與刷卡</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('checklist')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                activeTab === 'checklist'
-                  ? 'bg-[#231F1E] text-white'
-                  : 'text-[#6E655F] hover:text-[#231F1E] hover:bg-[#F0EAE1]'
-              }`}
-            >
-              <CheckSquare className="w-4 h-4" />
-              <span>打包與朝聖</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('deploy')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                activeTab === 'deploy'
-                  ? 'bg-[#231F1E] text-white'
-                  : 'text-[#6E655F] hover:text-[#231F1E] hover:bg-[#F0EAE1]'
-              }`}
-            >
-              <Rocket className="w-4 h-4" />
-              <span>自動化部署</span>
+              <span>匯率刷卡</span>
             </button>
           </nav>
 
-          {/* Zone 3: Primary Action / Install PWA / Export */}
+          {/* Zone 3: PWA Install Action */}
           <div className="flex items-center gap-2 shrink-0">
             {isInstallable && !isInstalled && (
               <button
@@ -105,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenD
                 className="flex items-center gap-1.5 bg-[#D97706] hover:bg-[#B45309] text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-xs transition-colors cursor-pointer whitespace-nowrap"
               >
                 <Smartphone className="w-3.5 h-3.5" />
-                <span>安裝 PWA</span>
+                <span>安裝手冊</span>
               </button>
             )}
 
@@ -116,17 +117,9 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenD
               >
                 <Smartphone className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">加入 iPhone 主畫面</span>
-                <span className="sm:hidden">安裝</span>
+                <span className="sm:hidden">加入主畫面</span>
               </button>
             )}
-
-            <button
-              onClick={onOpenDeployModal}
-              className="flex items-center gap-1.5 bg-[#231F1E] hover:bg-[#3D3734] text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-xs transition-colors cursor-pointer whitespace-nowrap"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>匯出部署檔</span>
-            </button>
           </div>
         </div>
       </header>
@@ -141,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenD
               </h3>
               <button
                 onClick={() => setShowIOSModal(false)}
-                className="text-[#9CA3AF] hover:text-[#231F1E] text-sm font-bold"
+                className="text-[#9CA3AF] hover:text-[#231F1E] text-sm font-bold cursor-pointer"
               >
                 ✕
               </button>
