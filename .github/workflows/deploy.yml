@@ -24,11 +24,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22 # 升級版本，避開 Node 20 警告
 
       - name: Install dependencies
-        run: npm ci || npm install
+        run: npm install # 不依賴 package-lock.json，直接安裝依賴
 
       - name: Build project
         run: npm run build
@@ -36,8 +35,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 發布 build 後產出的靜態資料夾
-          # 若你的專案打包輸出資料夾是 build，請改填 './build'
           path: './dist'
 
   deploy:
