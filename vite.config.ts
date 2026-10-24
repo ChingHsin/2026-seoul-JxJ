@@ -1,11 +1,15 @@
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite'; // 若使用 @tailwindcss/vite
+import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
-import {defineConfig} from 'vite';
-import {VitePWA} from 'vite-plugin-pwa';
+
+// ⚠️ 請將這裡替換為你的 GitHub 倉庫名稱，前後都要有斜線「/」
+const baseRepoName = '/<2026-seoul-JxJ>/';
 
 export default defineConfig(() => {
   return {
+    base: baseRepoName, // 👈 修正靜態資源路徑，解決白畫面關鍵
     plugins: [
       react(),
       tailwindcss(),
@@ -13,30 +17,30 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon.svg'],
         manifest: {
-          id: '/',
+          id: baseRepoName,
           name: '2026 首爾秋日獨旅手冊',
           short_name: '首爾獨旅手冊',
           description: '2026/10/29 - 11/03 首爾 6 天 5 夜自由行行程手冊，整合匯率換算、行李配重試算與離線時間軸。',
           theme_color: '#FAF7F2',
           background_color: '#FAF7F2',
           display: 'standalone',
-          start_url: '/',
-          scope: '/',
+          start_url: baseRepoName,
+          scope: baseRepoName,
           icons: [
             {
-              src: '/pwa-192x192.png',
+              src: `${baseRepoName}pwa-192x192.png`,
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: '/pwa-512x512.png',
+              src: `${baseRepoName}pwa-512x512.png`,
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: '/pwa-maskable-512x512.png',
+              src: `${baseRepoName}pwa-maskable-512x512.png`,
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable',
@@ -58,10 +62,7 @@ export default defineConfig(() => {
       },
     },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
-      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
   };
