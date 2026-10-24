@@ -1,0 +1,8 @@
+{
+  "name": "Seoul Autumn Travel PWA & CI/CD Hub",
+  "description": "2026 首爾秋日 6 天 5 夜獨旅手冊 PWA，整合每日行程時間軸、15kg 行李配重與戰利品記帳試算、雙向即時匯率換算、同款朝聖清單與 GitHub Actions 自動化部署匯出。",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
