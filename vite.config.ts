@@ -5,7 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 // ⚠️ 請將這裡替換為你的 GitHub 倉庫名稱，前後都要有斜線「/」
-const baseRepoName = '/<2026-seoul-JxJ>/';
+const baseRepoName = '/2026-seoul-JxJ/';
 
 export default defineConfig(() => {
   return {
